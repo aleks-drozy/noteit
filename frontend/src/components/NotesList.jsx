@@ -1,4 +1,4 @@
-function NotesList({ notes, selectedNote, onSelectNote, onNewNote }) {
+function NotesList({ notes = [], selectedNote, onSelectNote, onNewNote }) {
   return (
     <div className="notes-list">
       <div className="notes-list-header">
@@ -12,7 +12,7 @@ function NotesList({ notes, selectedNote, onSelectNote, onNewNote }) {
         notes.map((note) => (
           <div
             key={note._id}
-            className={"note-item" + (note._id === selectedNote?._id ? " selected" : "")}
+            className={`note-item${note._id === selectedNote?._id ? " selected" : ""}`}
             onClick={() => onSelectNote(note)}
           >
             <div className="note-item-title">
