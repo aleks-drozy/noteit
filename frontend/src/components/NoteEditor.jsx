@@ -7,12 +7,15 @@ export default function NoteEditor({ note, onNoteCreated, onNoteUpdated, onNoteD
   const [tags, setTags] = useState("");
   const [saving, setSaving] = useState(false);
   const [showShare, setShowShare] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
+    setError(null);
+    setShowShare(false);
     if (note) {
-      setTitle(note.title);
-      setBody(note.body);
-      setTags(note.tags.join(", "));
+      setTitle(note.title ?? "");
+      setBody(note.body ?? "");
+      setTags((note.tags ?? []).join(", "));
     } else {
       setTitle("");
       setBody("");
@@ -23,6 +26,7 @@ export default function NoteEditor({ note, onNoteCreated, onNoteUpdated, onNoteD
   const isNew = !note?._id;
 
   const handleSave = async () => {
+    const noteId = note?._id;
     setSaving(true);
     try {
       const payload = {
@@ -30,30 +34,34 @@ export default function NoteEditor({ note, onNoteCreated, onNoteUpdated, onNoteD
         body,
         tags: tags.split(",").map((t) => t.trim()).filter(Boolean),
       };
-      if (isNew) {
+      if (!noteId) {
         const res = await api.post("/api/notes", payload);
         onNoteCreated(res.data);
       } else {
-        const res = await api.patch(`/api/notes/${note._id}`, payload);
+        const res = await api.patch(`/api/notes/${noteId}`, payload);
         onNoteUpdated(res.data);
       }
     } catch (err) {
       console.error("Save failed:", err);
+      setError("Save failed. Please try again.");
     } finally {
       setSaving(false);
     }
   };
 
   const handleDelete = async () => {
+    if (!note?._id) return;
     try {
       await api.delete(`/api/notes/${note._id}`);
       onNoteDeleted(note._id);
     } catch (err) {
       console.error("Delete failed:", err);
+      setError("Delete failed. Please try again.");
     }
   };
 
   const handlePublish = async (role) => {
+    if (!note?._id) return;
     try {
       const res = await api.post(`/api/notes/${note._id}/publish`, {
         role: role === "Unpublish" ? null : role,
@@ -61,6 +69,7 @@ export default function NoteEditor({ note, onNoteCreated, onNoteUpdated, onNoteD
       onNoteUpdated(res.data);
     } catch (err) {
       console.error("Publish failed:", err);
+      setError("Publish failed. Please try again.");
     }
   };
 
@@ -107,6 +116,7 @@ export default function NoteEditor({ note, onNoteCreated, onNoteUpdated, onNoteD
           Delete
         </button>
       </div>
+      {error && <p style={{ color: "red", fontSize: "0.85rem", marginTop: "0.5rem" }}>{error}</p>}
       {showShare && <div>Share coming soon</div>}
     </div>
   );
