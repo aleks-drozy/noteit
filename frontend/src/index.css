@@ -1,0 +1,114 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: rgb(132, 122, 199);
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+}
+
+.form-container {
+    background-color: #fff;
+    width: 450px;
+    padding: 2rem;
+    border-radius: 30px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    transition: transform 0.2s;
+}
+
+.form-container:hover {
+    transform: translateY(-5px);
+}
+
+.form-container h1 {
+    font-size: 2.5rem;
+    text-align: left;
+    margin-bottom: 1rem;
+    color: #4B0082;
+}
+
+.form-container h2 {
+    font-size: 2rem;
+    padding: 1rem 0;
+    text-align: center;
+    color: #333; 
+}
+
+.form-container form {
+    margin: 2rem 0;
+}
+
+.form-control {
+    position: relative;
+}
+
+.form-control input,
+.form-control select {
+    width: 100%;
+    border: 1px solid #ddd;
+    font-family: inherit;
+    font-size: 1.2rem;
+    padding: 0.75rem 2rem;
+    margin-bottom: 1rem;
+    border-radius: 5px;
+    color: #333; 
+    transition: border-color 0.3s;
+}
+
+.form-control select {
+    background-color: #fff; 
+    color: #333; 
+}
+
+.form-control input:focus,
+.form-control select:focus {
+    border-color: slateblue;
+    outline: none; 
+}
+
+.form-control .icon {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    font-size: 1.5rem;
+    color: #888;
+}
+
+form button {
+    width: 100%;
+    background: slateblue;
+    outline: none;
+    border: none;
+    font-family: inherit;
+    color: #fff;
+    padding: 1rem 0;
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border-radius: 50px;
+    transition: background 0.3s;
+}
+
+form button:hover {
+    background: #5a5cfc; 
+}
+
+form button:active {
+    transform: scale(0.98);
+}
+
+.error-message {
+    color: red;
+    margin-top: 10px;
+    font-size: 0.9rem;
+    text-align: center;
+}
