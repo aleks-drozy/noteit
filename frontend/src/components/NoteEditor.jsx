@@ -44,7 +44,7 @@ export default function NoteEditor({ note, onNoteCreated, onNoteUpdated, onNoteD
       }
     } catch (err) {
       console.error("Save failed:", err);
-      setError("Save failed. Please try again.");
+      setError(err.response?.data?.error || "Save failed. Please try again.");
     } finally {
       setSaving(false);
     }
