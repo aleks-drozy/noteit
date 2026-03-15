@@ -7,13 +7,17 @@
 }
 
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     min-height: 100vh;
     background-color: rgb(132, 122, 199);
     font-family: "Poppins", sans-serif;
     font-weight: 400;
+}
+
+/* Auth pages: center the form vertically and horizontally */
+body:not(:has(.dashboard)) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .form-container {
@@ -111,4 +115,316 @@ form button:active {
     margin-top: 10px;
     font-size: 0.9rem;
     text-align: center;
+}
+
+/* ── Dashboard layout ── */
+
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.dashboard-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1.5rem;
+    background-color: #4B0082;
+    color: #fff;
+    flex-shrink: 0;
+}
+
+.dashboard-header h1 {
+    font-size: 1.5rem;
+    color: #fff;
+    margin: 0;
+}
+
+.dashboard-user {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.9rem;
+}
+
+.logout-btn {
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.4);
+    color: #fff;
+    padding: 0.3rem 0.8rem;
+    border-radius: 50px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.85rem;
+    transition: background 0.2s;
+}
+
+.logout-btn:hover {
+    background: rgba(255,255,255,0.35);
+}
+
+.dashboard-body {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+/* ── Notes list sidebar ── */
+
+.notes-list {
+    width: 260px;
+    min-width: 220px;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border-right: 1px solid #ddd;
+    overflow-y: auto;
+}
+
+.notes-list-header {
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+    flex-shrink: 0;
+}
+
+.new-note-btn {
+    width: 100%;
+    background: slateblue;
+    color: #fff;
+    border: none;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.new-note-btn:hover {
+    background: #5a5cfc;
+}
+
+.note-item {
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid #f0f0f0;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.note-item:hover {
+    background: #f5f3ff;
+}
+
+.note-item.selected {
+    background: #ede9fe;
+    border-left: 3px solid slateblue;
+}
+
+.note-item-title {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #333;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 0.25rem;
+}
+
+.note-item-preview {
+    font-size: 0.8rem;
+    color: #888;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.notes-empty {
+    padding: 1.5rem 1rem;
+    font-size: 0.85rem;
+    color: #aaa;
+    text-align: center;
+}
+
+/* ── Note editor ── */
+
+.note-editor {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+    background: #fafafa;
+    overflow-y: auto;
+}
+
+.note-title-input {
+    width: 100%;
+    font-size: 1.4rem;
+    font-weight: 600;
+    font-family: inherit;
+    border: none;
+    border-bottom: 2px solid #eee;
+    outline: none;
+    padding: 0.5rem 0;
+    margin-bottom: 1rem;
+    background: transparent;
+    color: #222;
+    transition: border-color 0.2s;
+}
+
+.note-title-input:focus {
+    border-bottom-color: slateblue;
+}
+
+.note-body-textarea {
+    flex: 1;
+    width: 100%;
+    min-height: 200px;
+    font-family: inherit;
+    font-size: 1rem;
+    line-height: 1.6;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #333;
+    resize: none;
+    padding: 0;
+}
+
+.note-tags-input {
+    width: 100%;
+    font-family: inherit;
+    font-size: 0.9rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 0.4rem 0.75rem;
+    margin: 1rem 0;
+    color: #555;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.note-tags-input:focus {
+    border-color: slateblue;
+}
+
+.note-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.btn-save {
+    background: slateblue;
+    color: #fff;
+    border: none;
+    padding: 0.55rem 1.2rem;
+    border-radius: 50px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-save:hover { background: #5a5cfc; }
+.btn-save:disabled { opacity: 0.6; cursor: default; }
+
+.btn-secondary {
+    background: #fff;
+    color: slateblue;
+    border: 1px solid slateblue;
+    padding: 0.5rem 1.1rem;
+    border-radius: 50px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-secondary:hover { background: #f5f3ff; }
+.btn-secondary:disabled { opacity: 0.4; cursor: default; }
+
+.btn-delete {
+    margin-left: auto;
+    background: #fff;
+    color: #e53e3e;
+    border: 1px solid #e53e3e;
+    padding: 0.5rem 1.1rem;
+    border-radius: 50px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-delete:hover { background: #fff5f5; }
+.btn-delete:disabled { opacity: 0.4; cursor: default; }
+
+.publish-select {
+    appearance: none;
+    background: #fff;
+    color: slateblue;
+    border: 1px solid slateblue;
+    padding: 0.5rem 1.1rem;
+    border-radius: 50px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.publish-select:disabled {
+    opacity: 0.4;
+    cursor: default;
+}
+
+/* ── Share modal ── */
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+
+.modal {
+    background: #fff;
+    border-radius: 16px;
+    padding: 2rem;
+    width: 380px;
+    box-shadow: rgba(0,0,0,0.25) 0px 8px 24px;
+}
+
+.modal h3 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.modal input {
+    width: 100%;
+    border: 1px solid #ddd;
+    font-family: inherit;
+    font-size: 1rem;
+    padding: 0.65rem 1rem;
+    border-radius: 8px;
+    margin-bottom: 0.75rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.modal input:focus { border-color: slateblue; }
+
+.modal-error { color: red; font-size: 0.85rem; margin-bottom: 0.5rem; }
+.modal-success { color: green; font-size: 0.85rem; margin-bottom: 0.5rem; }
+
+.modal-actions {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: flex-end;
+    margin-top: 0.5rem;
 }
