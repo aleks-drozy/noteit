@@ -1,10 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import api from "../api/axios";
 
 export default function ShareModal({ noteId, onClose }) {
   const [username, setUsername] = useState("");
   const [status, setStatus] = useState(null);
   const [submitting, setSubmitting] = useState(false);
+
+  const timerRef = useRef(null);
+  const onCloseRef = useRef(onClose);
+  useEffect(() => { onCloseRef.current = onClose; }, [onClose]);
+  useEffect(() => { return () => { if (timerRef.current) clearTimeout(timerRef.current); }; }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -14,9 +19,13 @@ export default function ShareModal({ noteId, onClose }) {
     try {
       const searchRes = await api.get(`/api/users/search?username=${encodeURIComponent(username.trim())}`);
       const foundUser = searchRes.data; // { _id, username, role }
+      if (!foundUser?._id) {
+        setStatus({ type: "error", message: "User not found" });
+        return;
+      }
       await api.post(`/api/notes/${noteId}/share`, { userId: foundUser._id });
       setStatus({ type: "success", message: `Shared with ${foundUser.username}` });
-      setTimeout(() => onClose(), 2000);
+      timerRef.current = setTimeout(() => onCloseRef.current(), 2000);
     } catch (err) {
       const message = err.response?.data?.error || "Something went wrong";
       setStatus({ type: "error", message });
@@ -40,7 +49,7 @@ export default function ShareModal({ noteId, onClose }) {
           {status?.type === "success" && <p className="modal-success">{status.message}</p>}
           <div className="modal-actions">
             <button type="button" className="btn-secondary" onClick={onClose}>Cancel</button>
-            <button type="submit" className="btn-save" disabled={submitting}>
+            <button type="submit" className="btn-save" disabled={submitting || !username.trim()}>
               {submitting ? "Sharing..." : "Share"}
             </button>
           </div>
