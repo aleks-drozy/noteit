@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import api from "../api/axios";
+import ShareModal from "./ShareModal";
 
 export default function NoteEditor({ note, onNoteCreated, onNoteUpdated, onNoteDeleted }) {
   const [title, setTitle] = useState("");
@@ -117,7 +118,7 @@ export default function NoteEditor({ note, onNoteCreated, onNoteUpdated, onNoteD
         </button>
       </div>
       {error && <p style={{ color: "red", fontSize: "0.85rem", marginTop: "0.5rem" }}>{error}</p>}
-      {showShare && <div>Share coming soon</div>}
+      {showShare && <ShareModal noteId={note?._id} onClose={() => setShowShare(false)} />}
     </div>
   );
 }
